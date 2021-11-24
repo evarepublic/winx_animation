@@ -7,6 +7,9 @@ let count = 0,
 
 const flyAnimate = function () {
   count++;
+  if (count === 1500) {
+    clearInterval(idInterval);
+  }
   flora.style.top = -count / 12 + "px";
   flora.style.left = count / 3 + "px";
   if (count < 750) {
@@ -25,9 +28,6 @@ const flyAnimate = function () {
     musa.style.top = -50 - count / -20 + "px";
     musa.style.left = 400 - count / 2 + "px";
   }
-  if (count < 1500) {
-    setTimeout(flyAnimate, 10);
-  }
 };
 
-flyAnimate();
+let idInterval = setInterval(flyAnimate, 10);
