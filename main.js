@@ -1,14 +1,28 @@
+const pausePlayBtn = document.querySelector(".pause-play"),
+  resetBtn = document.querySelector(".reset");
+
 const bloom = document.querySelector(".bloom"),
   flora = document.querySelector(".flora"),
   musa = document.querySelector(".musa");
 
+const toggle = () => {
+  if (pausePlayBtn.textContent === "Пауза") {
+    pausePlayBtn.textContent = "Продолжить";
+    cancelAnimationFrame(flyInterval);
+  } else {
+    pausePlayBtn.textContent = "Пауза";
+    flyInterval = requestAnimationFrame(flyAnimate);
+  }
+};
+
 let count = 0,
-  step = 0;
+  flyInterval;
 
 const flyAnimate = function () {
+  flyInterval = requestAnimationFrame(flyAnimate);
   count++;
-  if (count === 1500) {
-    clearInterval(idInterval);
+  if (count === 1200) {
+    cancelAnimationFrame(flyInterval);
   }
   flora.style.top = -count / 12 + "px";
   flora.style.left = count / 3 + "px";
@@ -30,4 +44,7 @@ const flyAnimate = function () {
   }
 };
 
-let idInterval = setInterval(flyAnimate, 10);
+flyInterval = requestAnimationFrame(flyAnimate);
+
+pausePlayBtn.addEventListener("click", toggle);
+resetBtn.addEventListener("click", () => (count = 0));
